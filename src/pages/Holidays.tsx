@@ -35,7 +35,7 @@ const Holidays = () => {
          const response = await privateRequest.post("/addholiday",data)
          if (response.data.success) {
           
-          alert("Holiday Added Successfully! 🎉")
+          alert("Holiday Added Successfully!")
            fetchHoliday()
            closeModal()
            
@@ -82,7 +82,7 @@ const Holidays = () => {
           <TableBody>
             {holidays.map((holiday) => (
               <TableRow key={holiday.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell align="left">{dayjs(holiday.date).format("YYYY - MMMM/DD - dddd")}</TableCell>
+                <TableCell align="left">{dayjs(holiday.date).format("YYYY - MM- dd")}</TableCell>
                 <TableCell align="left">{holiday.day}</TableCell>
                 <TableCell align="left">{holiday.name}</TableCell>
               </TableRow>

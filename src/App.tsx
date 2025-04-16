@@ -12,7 +12,6 @@ import SideMenu from './components/SideMenu'
 import UserDashboard from './pages/Dashboard/UserDashboard'
 import DashboardLayout from './components/DashboardLayout'
 import Navbar from './components/Navbar'
-
 import Attendence from './pages/Attendence'
 import Payroll from './pages/Payroll'
 import Leaves from './pages/Leaves'
@@ -22,27 +21,29 @@ import AddEmp from './pages/AddEmp'
 import ViewOnlyEmp from './pages/ViewOnlyEmp'
 import EmpList from './pages/EmpList'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { useSelector } from 'react-redux'
 
 function App() {
-
-  const token = localStorage.getItem("token")
-
+   const {isAuthenticated} = useSelector((state:any)=>state.loginState) 
   return (
     <Routes>
-      <Route element={<ProtectedRoute ><UserDashboard /></ProtectedRoute>} path='/'>
-        <Route element={<ProtectedRoute ><EmpList /></ProtectedRoute>} path='/emp' />
-        <Route element={<ProtectedRoute><AddEmp /></ProtectedRoute>} path='/addemp' />
-        <Route element={<ProtectedRoute><ViewOnlyEmp /></ProtectedRoute>} path='/view/:id' />
-        <Route element={<ProtectedRoute><Attendence /></ProtectedRoute>} path='/attend' />
-        <Route element={<ProtectedRoute><Payroll /></ProtectedRoute>} path='/pay' />
-        <Route element={<ProtectedRoute><Leaves /></ProtectedRoute>} path='/leave' />
-        <Route element={<ProtectedRoute><Holidays /></ProtectedRoute>} path='/holi' />
-        <Route element={<ProtectedRoute><Settings /></ProtectedRoute>} path='/set' />
+      <Route element={<ProtectedRoute allowedroles={["user","admin"]}><UserDashboard /></ProtectedRoute>} path='/'>
+        <Route element={<ProtectedRoute allowedroles={["admin"]}><EmpList /></ProtectedRoute>} path='/emp' />
+        <Route element={<ProtectedRoute allowedroles={["admin"]}><AddEmp /></ProtectedRoute>} path='/addemp' />
+        <Route element={<ProtectedRoute allowedroles={["user","admin"]}><ViewOnlyEmp /></ProtectedRoute>} path='/view/:id' />
+        <Route element={<ProtectedRoute allowedroles={["user","admin"]}><Attendence /></ProtectedRoute>} path='/attend' />
+        <Route element={<ProtectedRoute allowedroles={["user","admin"]}><Payroll /></ProtectedRoute>} path='/pay' />
+        <Route element={<ProtectedRoute allowedroles={["user","admin"]}><Leaves /></ProtectedRoute>} path='/leave' />
+        <Route element={<ProtectedRoute allowedroles={["user","admin"]}><Holidays /></ProtectedRoute>} path='/holi' />
+        <Route element={<ProtectedRoute allowedroles={["user","admin"]}><Settings /></ProtectedRoute>} path='/set' />
         {/* <Route index element={<h1> dashboard</h1>} /> */}
       </Route>
-      <Route element={!token ? <LoginPage /> : <Navigate to={"/"} />} path='/login' />
-      <Route element={<UserDashboard />} path='/user' />
+      <Route element={!isAuthenticated ? <LoginPage /> : <Navigate to={"/"} />} path='/login' />
       <Route element={<RegisterPage />} path='/register' />
+      {/* <Route element={<EnterOtp setStep={}/>} path='/otp' />
+      <Route element={<ForgotPassword />} path='/forgot' /> */}
+      <Route element={<RenderingComponents />} path='/render' />
+      <Route element={<ResetPassword />} path='/reset' />
       <Route element={< h1>No page found</h1>} path='*' />
     </Routes>
 

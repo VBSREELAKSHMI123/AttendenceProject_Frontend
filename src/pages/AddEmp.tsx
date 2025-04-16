@@ -1,4 +1,4 @@
-// import React from 'react'
+// import React from 'react';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -11,6 +11,7 @@ import Documents from './Documents';
 import { PERSONAL, PROFESSIONAL, DOCUMENTS } from '../utils/constants';
 import { TypeList } from '../types/DeclareType.types';
 import { privateRequest } from '../apis/requsetMethods';
+
 
 const AddEmp = () => {
   const [TabValue, setTabValue] = useState<string>(PERSONAL);

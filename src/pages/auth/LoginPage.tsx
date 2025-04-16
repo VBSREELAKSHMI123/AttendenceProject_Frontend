@@ -10,9 +10,16 @@ import { Checkbox, FormControlLabel } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { publicRequest } from '../../apis/requsetMethods'
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../components/Redux/LoginSlice/login';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {user} = useSelector((state:any)=>state.loginState)
+    console.log("USER:", user)
+
+    
     const [data, setData] = useState<TypeList>({
         email: "",
         password: "",
@@ -25,22 +32,27 @@ const LoginPage = () => {
 
     })
 
+
     const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
+    
     const readValue = async () => {
 
         try {
             const res = await publicRequest.post("/login", data)
-            console.log(res);
+  
 
             if (res.data.success){
                 localStorage.setItem("token",res.data.token)
+                const {token,role,user_id,user_name} = res.data
+                dispatch(login({token,role,user_id,user_name}))
                 navigate('/')
                 alert(res.data.message)
+                
             }
-            console.log(res);
+          
 
         } catch (error: any) {
             console.log("err", error.response.data.message || "some thing went wrong");

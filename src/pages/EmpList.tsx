@@ -9,8 +9,8 @@ const columns: GridColDef[] = [
   { field: '_id', headerName: 'Employee ID', width: 130 },
   { field: 'department', headerName: 'Department', width: 130 },
   { field: 'designation', headerName: 'Designation', width: 130 },
+  { field: 'mode', headerName: 'Mode', width: 90 },
   { field: 'type', headerName: 'Type', width: 90 },
-  { field: 'status', headerName: 'Status', width: 90 },
   { field: 'action', headerName: 'Action', width: 100 },
 ];
 
