@@ -1,35 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
- 
+
 const initialState = {
-    user:{
-        email:"",
-        role:"",
-        user_name:"",
-        user_id:"",
-        token:""
+    user: {
+        email: "",
+        role: "",
+        fname: "",
+        lname: "",
+        user_id: "",
+        token: "",
+        isProfileComplete: null
     },
-    isAuthenticated:false
-    
+    isAuthenticated: false
+
 }
 
 const loginSlice = createSlice({
-    name:"loginState",
+    name: "loginState",
     initialState,
-    reducers:{
-         login:(state,action)=>{
+    reducers: {
+        login: (state, action) => {
+            console.log(action.payload);
+
             state.user.email = action.payload.email;
             state.user.role = action.payload.role;
-            state.user.user_name = action.payload.user_name;
+            state.user.fname = action.payload.fname;
+            state.user.lname = action.payload.lname;
             state.user.user_id = action.payload.user_id;
-            state.isAuthenticated=true
-         },
-         logout:(state)=>{
-            state.user = {email:"",role:"",user_name:"",user_id:"",token:""}
-            state.isAuthenticated=false
-         }
-         
+            state.user.token = action.payload.token;
+            state.isAuthenticated = true
+            state.user.isProfileComplete = action.payload.isProfileComplete
+        },
+        logout: (state) => {
+            state.user = { email: "", role: "", fname: "", lname: "", user_id: "", token: "", isProfileComplete: null }
+            state.isAuthenticated = false
+        }
+
     }
 })
 
-export const { login,logout } = loginSlice.actions;
+export const { login, logout } = loginSlice.actions;
 export default loginSlice.reducer;

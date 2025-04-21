@@ -30,7 +30,7 @@ const RegisterPage = () => {
 
     const readValue = async () =>{
        try{
-            const response = await privateRequest.post("/adduser",data)
+            const response = await privateRequest.post("/api/admin/adduser",data)
             if (response.data.success) {
                 alert("Registered Successfully")
             } else {

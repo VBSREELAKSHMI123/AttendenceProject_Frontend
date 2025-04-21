@@ -16,10 +16,10 @@ import { login } from '../../components/Redux/LoginSlice/login';
 const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const {user} = useSelector((state:any)=>state.loginState)
+    const { user } = useSelector((state: any) => state.loginState)
     console.log("USER:", user)
 
-    
+
     const [data, setData] = useState<TypeList>({
         email: "",
         password: "",
@@ -37,22 +37,32 @@ const LoginPage = () => {
         setData({ ...data, [e.target.name]: e.target.value })
     }
 
-    
-    const readValue = async () => {
+
+    const handleLogin = async () => {
+
+        const payload = {
+            email: data.email,
+            password: data.password
+        }
 
         try {
-            const res = await publicRequest.post("/login", data)
-  
+            const res = await publicRequest.post("/api/auth/login", payload)
 
-            if (res.data.success){
-                localStorage.setItem("token",res.data.token)
-                const {token,role,user_id,user_name} = res.data
-                dispatch(login({token,role,user_id,user_name}))
+
+            if (res.data.success) {
+                localStorage.setItem("token", res.data.token)
+
+                console.log(res.data);
+
+                const { role, _id, fname, lname, isProfileComplete } = res.data.user
+                const { token } = res.data
+
+
+                dispatch(login({ token, role, user_id: _id, fname, lname, isProfileComplete }))
                 navigate('/')
-                alert(res.data.message)
-                
+                // alert(res.data.message)
             }
-          
+
 
         } catch (error: any) {
             console.log("err", error.response.data.message || "some thing went wrong");
@@ -99,7 +109,7 @@ const LoginPage = () => {
                         <FormControlLabel control={<Checkbox defaultChecked />} label="Remember Me" />
                         <button onClick={() => navigate('/render')}>ForgotPassword?</button>
                     </div>
-                    <LoginButton onClick={readValue}>Login</LoginButton>
+                    <LoginButton onClick={handleLogin}>Login</LoginButton>
                 </div>
             </div>
         </div>

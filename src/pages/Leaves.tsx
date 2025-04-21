@@ -10,12 +10,15 @@ import axios from 'axios';
 import { privateRequest } from '../apis/requsetMethods';
 import { InputField } from '../components/FormElemets/InputField';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
 
 type LeaveType = {
   date:string,
   description:string,
-  status:string
+  status:string,
+  employeeName:string,
+  _id: string;
 }
 
 
@@ -25,6 +28,7 @@ const Leaves = () => {
   const user_name = localStorage.getItem("user_name"); 
  const [leaves,setLeave]=useState<LeaveType[]>([])
  const [isapproved,setisApproved]=useState<boolean>(false)
+ const role = useSelector((state: any) => state.loginState.user?.role)
  const [data,setData]=useState({
   date:"",
   description:""
@@ -36,9 +40,24 @@ const Leaves = () => {
   };
 
 
+  const handleVerifyLeave = async (id: any) =>{
+       const approve = window.confirm("Are you sure to approve the leave ?")
+       if (approve) {
+          try {
+            const response = await privateRequest.patch(`/api/leave/verifyleave/${id}`,{status:"approved"})
+            if (response.data.success) {
+              alert("Leave approved successfully");
+              fetchLeave()
+            }
+          } catch (error) {
+            console.error("Approval error:", error);
+          }
+       }
+  }
+
       const addLeave = async () =>{
       try{
-           const response = await privateRequest.post(`/addleave/${id}`,data)
+           const response = await privateRequest.post(`/api/leave/addleave/${id}`,data)
            if (response.data.success) {
             alert("Leave Request Successfull")
             fetchLeave()
@@ -56,7 +75,10 @@ const Leaves = () => {
 
         const fetchLeave = async () =>{
          try{
-               const response=await privateRequest.get(`/viewempleave/${id}`)
+          const response = role === "user"
+          ? await privateRequest.get(`/api/leave/viewempleave/${id}`)
+          : await privateRequest.get(`/api/leave/viewleave`);
+    
                setLeave(response.data)
          }
           catch(error)  {
@@ -78,12 +100,13 @@ const Leaves = () => {
   return (
     <div className="p-4">
     <div className="flex justify-end mb-4">
-      <button className="bg-blue-700 rounded-md px-5 py-2 text-sm text-blue-50" onClick={()=>setisOpen(true)}>Apply Leave</button>
+     {role==="user" ? <button className="bg-blue-700 rounded-md px-5 py-2 text-sm text-blue-50" onClick={()=>setisOpen(true)}>Apply Leave</button>:""}
     </div>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+          <TableCell align="left">Name</TableCell>
             <TableCell align="left">Date</TableCell>
             <TableCell align="left">Description</TableCell>
             <TableCell align="left">Status</TableCell>
@@ -92,9 +115,15 @@ const Leaves = () => {
         <TableBody>
           {leaves.map((leave) => (
             <TableRow key={leave.description} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+              <TableCell align="left">{leave.employeeName}</TableCell>
               <TableCell align="left">{dayjs(leave.date).format("YYYY - MM- dd")}</TableCell>
               <TableCell align="left">{leave.description}</TableCell>
-              <TableCell align="left">{leave.status}</TableCell>
+              <TableCell align="left">
+                {role==="admin" && leave.status==="pending"?
+              <button className='text-blue-600 underline' onClick={()=>handleVerifyLeave(leave._id)}>{leave.status}</button>
+              : (<span>{leave.status}</span>)  
+              }
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

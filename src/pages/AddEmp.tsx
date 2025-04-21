@@ -11,11 +11,14 @@ import Documents from './Documents';
 import { PERSONAL, PROFESSIONAL, DOCUMENTS } from '../utils/constants';
 import { TypeList } from '../types/DeclareType.types';
 import { privateRequest } from '../apis/requsetMethods';
+import { useSelector } from 'react-redux';
 
 
 const AddEmp = () => {
   const [TabValue, setTabValue] = useState<string>(PERSONAL);
-
+  const {user}=useSelector((state:any)=>state.loginState)
+  console.log(user);
+  
   const [personalformValues, setpersonalFormValues] = useState<TypeList>({
     fname: "",
     lname: "",
@@ -69,7 +72,7 @@ const AddEmp = () => {
   const handleSubmit = async () => {
     try{
     const data = { ...personalformValues, ...profformValues }
-    const response = await privateRequest.post("/addemp",data)
+    const response = await privateRequest.post("/api/employee/addemp",data)
     if (response.data.success) {
        alert("Registered Successfully")
     } else {

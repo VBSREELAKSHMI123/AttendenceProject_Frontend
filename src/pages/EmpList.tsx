@@ -25,7 +25,7 @@ const EmpList = () => {
   const fetchEmp = async () => {
     try {
       const { page, pageSize } = paginationModel;
-      const response = await privateRequest.get(`/viewemp?page=${page + 1}&limit=${pageSize}`);
+      const response = await privateRequest.get(`/api/employee/viewemp?page=${page + 1}&limit=${pageSize}`);
       console.log('API Response:', response.data);
       setEmployees(response.data.data);
       setTotalRows(response.data.empCount);

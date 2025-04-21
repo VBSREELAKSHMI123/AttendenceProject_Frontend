@@ -32,7 +32,7 @@ const Holidays = () => {
 
   const addHoliday = async () =>{
     try{
-         const response = await privateRequest.post("/addholiday",data)
+         const response = await privateRequest.post("/api/holiday/addholiday",data)
          if (response.data.success) {
           
           alert("Holiday Added Successfully!")
@@ -51,7 +51,7 @@ const Holidays = () => {
 
   const fetchHoliday = async () =>{
    try{
-         const response=await privateRequest.get("/viewholiday")
+         const response=await privateRequest.get("/api/holiday/viewholiday")
          setHolidays(response.data)
    }
     catch(error)  {

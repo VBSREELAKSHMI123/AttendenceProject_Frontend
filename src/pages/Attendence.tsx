@@ -16,7 +16,7 @@ const Attendence = () => {
         return;
       }
       const data = checkIn ? { timeout: true } : { timeout: null }
-      const response = await privateRequest.post(`/addattendence`, data)
+      const response = await privateRequest.post(`/api/attendence/addattendence`, data)
       console.log("Response:", response.data);
       if (response.data.success) {
         setcheckIn(!checkIn)

@@ -10,10 +10,15 @@ type ProtectedRouteProps = {
 
 export const ProtectedRoute = ({ children,allowedroles=[] }: ProtectedRouteProps) => {
 const {isAuthenticated,user} = useSelector((state:any)=>state.loginState) 
+const {role,isProfileComplete}=user
     if(!isAuthenticated)    {
         return  <Navigate to={"/login"} />
     }
-  if (allowedroles.includes(user.role)) {
+
+    // if (role === "user" && !isProfileComplete && location.pathname !== "/complete-profile") {
+    //     return <Navigate to="/complete-profile" replace />;
+    //   }
+  if (allowedroles.includes(role)) {
      return children
   }
 
