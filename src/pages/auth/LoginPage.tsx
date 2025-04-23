@@ -54,11 +54,11 @@ const LoginPage = () => {
 
                 console.log(res.data);
 
-                const { role, _id, fname, lname, isProfileComplete } = res.data.user
+                const { role, user_id, fname, lname, isProfileComplete, email } = res.data.user
                 const { token } = res.data
 
 
-                dispatch(login({ token, role, user_id: _id, fname, lname, isProfileComplete }))
+                dispatch(login({ token, role, user_id, fname, lname, email, isProfileComplete }))
                 navigate('/')
                 // alert(res.data.message)
             }

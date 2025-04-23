@@ -39,7 +39,7 @@ function App() {
         <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Settings /></ProtectedRoute>} path='/set' />
         {/* <Route index element={<h1> dashboard</h1>} /> */}
       </Route>
-      <Route element={<AddEmp />} path='/complete-profile' />
+      <Route element={<ProtectedRoute allowedroles={["user"]}><AddEmp /></ProtectedRoute>} path='/complete-profile' />
       <Route element={!isAuthenticated ? <LoginPage /> : <Navigate to={"/"} />} path='/login' />
       <Route element={<RegisterPage />} path='/register' />
       {/* <Route element={<EnterOtp setStep={}/>} path='/otp' />

@@ -1,0 +1,6 @@
+complete profile condition (user only access and isprofilecomplte false only acces)
+update form with redux state value (for only complete-profile route)
+update profile (backend) also updated isProfileComplete: true
+update in frontend 
+navigate to dashboard after complete profile with conditionof isProfileComplete to true with redux reducer 
+

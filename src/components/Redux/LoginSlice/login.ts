@@ -30,6 +30,9 @@ const loginSlice = createSlice({
             state.isAuthenticated = true
             state.user.isProfileComplete = action.payload.isProfileComplete
         },
+        updateProfilecomplete: (state, action) => {
+            state.user.isProfileComplete = action.payload
+        },
         logout: (state) => {
             state.user = { email: "", role: "", fname: "", lname: "", user_id: "", token: "", isProfileComplete: null }
             state.isAuthenticated = false
@@ -38,5 +41,5 @@ const loginSlice = createSlice({
     }
 })
 
-export const { login, logout } = loginSlice.actions;
+export const { login, logout, updateProfilecomplete } = loginSlice.actions;
 export default loginSlice.reducer;
