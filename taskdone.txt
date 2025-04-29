@@ -4,3 +4,15 @@ update profile (backend) also updated isProfileComplete: true
 update in frontend 
 navigate to dashboard after complete profile with conditionof isProfileComplete to true with redux reducer 
 
+
+form field change 
+
+label add for all fields 
+dropdown for matiral status, gender , department ,employee type , mode of work
+change datepicker style 
+remove space in unwanted area  
+
+condition chanage for validation message display
+label design confirm 
+select dropdown design customize 
+ 

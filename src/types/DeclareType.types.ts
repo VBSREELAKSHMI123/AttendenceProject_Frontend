@@ -1,10 +1,12 @@
+import { Dayjs } from "dayjs";
+
 export interface TypeList {
     fname?: string ,
     name?: string ,
     email?: string,
     password?:string,
     label?: String,
-    value?: string | number,
+    value?:  Dayjs | null | any,
     type?:string,
     newpassword?:string,
     otp?:string,
@@ -12,7 +14,7 @@ export interface TypeList {
     placeholder?:string,
     lname?:string,
     phone?:string,
-    dob?:string,
+    dob?: Dayjs | null | any,
     status?:string,
     gender?:string,
     nation?:string,

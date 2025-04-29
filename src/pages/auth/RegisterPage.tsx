@@ -14,7 +14,8 @@ import { privateRequest } from '../../apis/requsetMethods'
 const RegisterPage = () => {
     const image=["src/assets/images/attendence1.jpeg","src/assets/images/attendence2.jpeg","src/assets/images/attendence3.jpeg","src/assets/images/attendence4.jpeg"]
     const [data, setData] = useState<TypeList>({
-        name: "",
+        fname: "",
+        lname:"",
         email: "",
         password: "",
         label: "",
@@ -30,7 +31,7 @@ const RegisterPage = () => {
 
     const readValue = async () =>{
        try{
-            const response = await privateRequest.post("/api/admin/adduser",data)
+            const response = await privateRequest.post("/api/employee/addemp",data)
             if (response.data.success) {
                 alert("Registered Successfully")
             } else {
@@ -56,7 +57,8 @@ const RegisterPage = () => {
                             <h2 className='font-bold text-xl font-lexend'>Welcome 👋</h2>
                             <p className='font-lexend'>Please enter your details to create account on HR Flow</p>
                         </div>
-                        <InputField label="user name" value={data?.name} name='name' onChange={inputHandler} type="text" isLogin/>
+                        <InputField label="First Name" value={data?.fname} name='fname' onChange={inputHandler} type="text" isLogin/>
+                        <InputField label="Last Name" value={data?.lname} name='lname' onChange={inputHandler} type="text" isLogin/>
                         <InputField label="email" value={data.email} name='email' onChange={inputHandler} type="text" isLogin/>
                         <InputField label="role" value={data.role} name='role' onChange={inputHandler} type="text" isLogin/>
                         <InputField label="password" value={data.password} name='password' onChange={inputHandler} type="password"  isLogin/>

@@ -14,18 +14,22 @@ import { useSelector } from 'react-redux';
 
 
 type LeaveType = {
+  _id(_id: any): void;
+  employee: any;
+  id(id: any): void;
   date:string,
   description:string,
   status:string,
-  employeeName:string,
-  _id: string;
+ user_id:string
+  
 }
 
 
 
 const Leaves = () => {
-  const id = localStorage.getItem("user_id"); 
-  const user_name = localStorage.getItem("user_name"); 
+
+  const user_name = localStorage.getItem("user_name");
+  const { user } = useSelector((state: any) => state.loginState) 
  const [leaves,setLeave]=useState<LeaveType[]>([])
  const [isapproved,setisApproved]=useState<boolean>(false)
  const role = useSelector((state: any) => state.loginState.user?.role)
@@ -33,6 +37,7 @@ const Leaves = () => {
   date:"",
   description:""
  })
+ const id = user.user_id
  const [isopen,setisOpen]=useState<boolean>(false)
   const closeModal = () => {
     setData({ date: "", description: "" }); 
@@ -115,7 +120,7 @@ const Leaves = () => {
         <TableBody>
           {leaves.map((leave) => (
             <TableRow key={leave.description} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell align="left">{leave.employeeName}</TableCell>
+              <TableCell align="left">{leave.employee.fname}</TableCell>
               <TableCell align="left">{dayjs(leave.date).format("YYYY - MM- dd")}</TableCell>
               <TableCell align="left">{leave.description}</TableCell>
               <TableCell align="left">

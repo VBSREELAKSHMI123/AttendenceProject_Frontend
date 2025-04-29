@@ -47,19 +47,17 @@ const LoginPage = () => {
 
         try {
             const res = await publicRequest.post("/api/auth/login", payload)
-
-
             if (res.data.success) {
                 localStorage.setItem("token", res.data.token)
 
                 console.log(res.data);
 
-                const { role, user_id, fname, lname, isProfileComplete, email } = res.data.user
+                const { role, user_id, fname, lname, isProfileComplete, email , designation} = res.data.user
                 const { token } = res.data
 
 
-                dispatch(login({ token, role, user_id, fname, lname, email, isProfileComplete }))
-                navigate('/')
+                dispatch(login({ token, role, user_id, fname, lname, email, isProfileComplete , designation }))
+                navigate('/dash')
                 // alert(res.data.message)
             }
 

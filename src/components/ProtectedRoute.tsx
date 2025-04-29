@@ -15,7 +15,7 @@ export const ProtectedRoute = ({ children, allowedroles = [] }: ProtectedRoutePr
 
     const { role, isProfileComplete } = user
     if (!isAuthenticated || role === "") {
-        return <Navigate to={"/login"} />
+        return <Navigate to={"/"} />
     }
 
     if (role === "user" && !isProfileComplete && location.pathname !== "/complete-profile") {

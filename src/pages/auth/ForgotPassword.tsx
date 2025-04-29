@@ -43,7 +43,7 @@ const ForgotPassword = ({ setStep }: ForgotPasswordType) => {
             <SideImage src={onLoadImage}/>
         </div> */}
             <div className='flex-1 px-20'>
-                <button className='items-start mb-5 text-gray-500 font-lexend' onClick={()=>navigate('/login')}><p>Back</p></button>
+                <button className='items-start mb-5 text-gray-500 font-lexend' onClick={()=>navigate('/')}><p>Back</p></button>
                 <div className='flex flex-col gap-5'>
                     <h1 className='font-bold font-lexend text-2xl'>Forgot Password</h1>
                     <p>Enter your registered email address. we will send you a code to reset your password.</p>

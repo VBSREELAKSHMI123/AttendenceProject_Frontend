@@ -3,7 +3,7 @@ import { TypeList } from '../../types/DeclareType.types'
 import { Eye, EyeSlash } from '@phosphor-icons/react'
 
 type HandleType = {
-    label: string,
+    label?: string,
     value: string | undefined | number,
     name: string,
     type: string,

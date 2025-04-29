@@ -94,7 +94,7 @@ const AddEmp = () => {
 
       if (response.data && response.data.success) {
         dispatch(updateProfilecomplete(true))
-        navigate("/")
+        navigate("/dash")
       }
 
       if (response.data.success) {

@@ -10,6 +10,7 @@ import axios from 'axios';
 import { privateRequest } from '../apis/requsetMethods';
 import { InputField } from '../components/FormElemets/InputField';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
 
 type HolidayType = {
@@ -20,6 +21,7 @@ type HolidayType = {
 
 const Holidays = () => {
   const [holidays,setHolidays]=useState<HolidayType[]>([])
+  const { user } = useSelector((state: any) => state.loginState)
   const [data,setData]=useState({
        name:"",
        date:""
@@ -68,7 +70,7 @@ const Holidays = () => {
   return (
 <div className="p-4">
       <div className="flex justify-end mb-4">
-        <button className="bg-blue-700 rounded-md px-5 py-2 text-sm text-blue-50" onClick={()=>setisOpen(true)}>Add Holiday</button>
+       {user.role==="admin"?<button className="bg-blue-700 rounded-md px-5 py-2 text-sm text-blue-50" onClick={()=>setisOpen(true)}>Add Holiday</button>:""}
       </div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -9,6 +9,46 @@ export const PERSONAL = "PERSONAL"
 export const PROFESSIONAL = "PROFESSIONAL"
 export const DOCUMENTS = "DOCUMENTS"
 
+export const maritalStatusOption= [
+    { label: 'Single', value: 'single' },
+    { label: 'Married', value: 'married' },
+    { label: 'Divorced', value: 'divorced' },
+    { label: 'Widowed', value: 'widowed' },
+  ]
+
+export const genderOption = [
+    { label: 'Male', value: 'male' },
+    { label: 'Female', value: 'female' },
+    { label: 'Others', value: 'others' },
+]
+
+export const departmentOption = [
+  { label: 'Sales', value: 'sales' },
+  { label: 'Marketing', value: 'marketing' },
+  { label: 'Engineering', value: 'engineering' },
+  { label: 'Human Resources', value: 'hr' },
+  { label: 'Finance', value: 'finance' },
+  { label: 'Customer Support', value: 'support' },
+  { label: 'Product Management', value: 'product' },
+  { label: 'IT', value: 'it' },
+  { label: 'Legal', value: 'legal' },
+  { label: 'Operations', value: 'operations' },
+]
+
+export const employeeTypeOption = [
+  { label: 'Full-Time', value: 'fulltime' },
+  { label: 'Part-Time', value: 'parttime' },
+  { label: 'Contract', value: 'contract' },
+  { label: 'Intern', value: 'intern' },
+  { label: 'Freelance', value: 'freelance' },
+]
+
+export const modeOption = [
+  { label: 'On-Site', value: 'onsite' },
+  { label: 'Remote', value: 'remote' },
+  { label: 'Hybrid', value: 'hybrid' },
+]
+
 // const items:MenuItem[] = [
 //     {
 //       name: "All Employee",

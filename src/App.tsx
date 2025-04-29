@@ -20,27 +20,32 @@ import Settings from './pages/Settings'
 import AddEmp from './pages/AddEmp'
 import ViewOnlyEmp from './pages/ViewOnlyEmp'
 import EmpList from './pages/EmpList'
+
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { useSelector } from 'react-redux'
 import { ComplateProfile } from './pages/ComplateProfile'
+import Profile from './pages/Profile'
+import { LocalizationProvider } from '@mui/x-date-pickers'
 
 function App() {
   const { isAuthenticated } = useSelector((state: any) => state.loginState)
   return (
     <Routes>
-      <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><UserDashboard /></ProtectedRoute>} path='/'>
-        <Route element={<ProtectedRoute allowedroles={["admin"]}><EmpList /></ProtectedRoute>} path='/emp' />
-        <Route element={<ProtectedRoute allowedroles={["admin"]}><AddEmp /></ProtectedRoute>} path='/addemp' />
-        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><ViewOnlyEmp /></ProtectedRoute>} path='/view/:id' />
-        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Attendence /></ProtectedRoute>} path='/attend' />
-        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Payroll /></ProtectedRoute>} path='/pay' />
-        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Leaves /></ProtectedRoute>} path='/leave' />
-        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Holidays /></ProtectedRoute>} path='/holi' />
-        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Settings /></ProtectedRoute>} path='/set' />
+      <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><UserDashboard /></ProtectedRoute>} path='/dash'>
+        <Route element={<ProtectedRoute allowedroles={["admin"]}><EmpList /></ProtectedRoute>} path='emp' />
+        <Route element={<ProtectedRoute allowedroles={["admin"]}><AddEmp /></ProtectedRoute>} path='addemp' />
+        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><ViewOnlyEmp /></ProtectedRoute>} path='view/:id' />
+        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Attendence /></ProtectedRoute>} path='attend' />
+        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Payroll /></ProtectedRoute>} path='pay' />
+        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Leaves /></ProtectedRoute>} path='leave' />
+        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Holidays /></ProtectedRoute>} path='holi' />
+        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}><Settings /></ProtectedRoute>} path='set' />
+        <Route element={<ProtectedRoute allowedroles={["user", "admin"]}>< Profile/></ProtectedRoute>} path='profile' />
         {/* <Route index element={<h1> dashboard</h1>} /> */}
       </Route>
+
+      <Route element={!isAuthenticated ? <LoginPage /> : <Navigate to={"/dash"} />} path='/' />
       <Route element={<ProtectedRoute allowedroles={["user"]}><AddEmp /></ProtectedRoute>} path='/complete-profile' />
-      <Route element={!isAuthenticated ? <LoginPage /> : <Navigate to={"/"} />} path='/login' />
       <Route element={<RegisterPage />} path='/register' />
       {/* <Route element={<EnterOtp setStep={}/>} path='/otp' />
       <Route element={<ForgotPassword />} path='/forgot' /> */}

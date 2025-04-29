@@ -22,19 +22,19 @@ const SideBar = () => {
     {
       name: "All Employee",
       icon: <UsersThree size={20} />,
-      url: "/emp",
+      url: "/dash/emp",
       role:["admin"]
     },
     {
       name: "Attendence",
       icon: <CalendarCheck size={20} />,
-      url: "/attend",
+      url: "/dash/attend",
       role:["user","admin"]
     },
     {
       name: "Payroll",
       icon: <CurrencyInr size={20} />,
-      url: "/pay",
+      url: "/dash/pay",
       role:["admin","user"]
     },
     {
@@ -52,19 +52,19 @@ const SideBar = () => {
     {
       name: "Leaves",
       icon: <Notepad size={20} />,
-      url: "/leave",
+      url: "/dash/leave",
       role:["admin","user"]
     },
     {
       name: "Holidays",
       icon: <CalendarDots size={20} />,
-      url: "/holi",
+      url: "/dash/holi",
       role:["admin","user"]
     },
     {
       name: "Settings",
       icon: <GearSix size={20} />,
-      url: "/set",
+      url: "/dash/set",
       role:["admin","user"]
     }]
   const handleClick = (url: string) => {
@@ -74,7 +74,7 @@ const SideBar = () => {
 const handleLogout = () =>{
      localStorage.removeItem("token")
      dispatch(logout())
-     navigate("/login")
+     navigate("/")
 }
 
   return (
