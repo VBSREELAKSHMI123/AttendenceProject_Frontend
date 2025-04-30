@@ -57,8 +57,6 @@ const applyFilter =  () => {
   setOpenModal(false)
   setFilterApplied(true)
   setPaginationModel({page:0,pageSize:5})
-
-
 }
 
 const clearFilter = () => {
@@ -67,8 +65,6 @@ const clearFilter = () => {
   setPaginationModel({page:0,pageSize:5})
   fetchEmp()
 }
-
-
 
   useEffect(() => {
     fetchEmp();

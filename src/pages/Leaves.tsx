@@ -11,16 +11,20 @@ import { privateRequest } from '../apis/requsetMethods';
 import { InputField } from '../components/FormElemets/InputField';
 import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
+import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 
 
 type LeaveType = {
-  _id(_id: any): void;
+  _id: string;
   employee: any;
   id(id: any): void;
   date:string,
   description:string,
   status:string,
- user_id:string
+  user_id:string
   
 }
 
@@ -33,6 +37,8 @@ const Leaves = () => {
  const [leaves,setLeave]=useState<LeaveType[]>([])
  const [isapproved,setisApproved]=useState<boolean>(false)
  const role = useSelector((state: any) => state.loginState.user?.role)
+ const [dateRange,setDateRange] = useState<[dayjs.Dayjs | null, dayjs.Dayjs | null]>([null, null])
+ const [fileteredLeave,setFilteredLeave] = useState<LeaveType[]>([])
  const [data,setData]=useState({
   date:"",
   description:""
@@ -95,6 +101,22 @@ const Leaves = () => {
           fetchLeave()
         },[id])
 
+        useEffect(()=>{
+         if (dateRange[0] && dateRange[1]) {
+          const start = dateRange[0].startOf('day')
+          const end = dateRange[1].endOf('day')
+          const filterLeave = fileteredLeave.filter((leave)=>{
+          const  leaveDate = dayjs(leave.date)
+          console.log("Leave Date:", leave.date);
+          return leaveDate.isAfter(start.subtract(1,'day')) && leaveDate.isBefore(end.add(1,'day'))
+          })
+
+          setFilteredLeave(filterLeave)
+         } else {
+          setFilteredLeave(leaves)
+         }
+        },[dateRange,leaves])
+
     //  const handleVerify = async () =>{
     //      const response = await privateRequest.patch(`/verifyleave/${id}`,{status:"approved"})
     //      if (response.data.success) {
@@ -105,7 +127,18 @@ const Leaves = () => {
   return (
     <div className="p-4">
     <div className="flex justify-end mb-4">
-     {role==="user" ? <button className="bg-blue-700 rounded-md px-5 py-2 text-sm text-blue-50" onClick={()=>setisOpen(true)}>Apply Leave</button>:""}
+     {role==="user" ? <button className="bg-blue-700 rounded-md px-5 py-2 text-sm text-blue-50" onClick={()=>setisOpen(true)}>Apply Leave</button>:
+     <LocalizationProvider 
+     dateAdapter={AdapterDayjs}>
+  <DemoContainer components={['DateRangePicker']}>
+    <DateRangePicker
+      value={dateRange}
+      onChange={(newValue) => {
+        setDateRange(newValue);
+      }}
+    />
+  </DemoContainer>
+</LocalizationProvider>}
     </div>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -118,20 +151,24 @@ const Leaves = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {leaves.map((leave) => (
-            <TableRow key={leave.description} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell align="left">{leave.employee.fname}</TableCell>
-              <TableCell align="left">{dayjs(leave.date).format("YYYY - MM- dd")}</TableCell>
-              <TableCell align="left">{leave.description}</TableCell>
-              <TableCell align="left">
-                {role==="admin" && leave.status==="pending"?
-              <button className='text-blue-600 underline' onClick={()=>handleVerifyLeave(leave._id)}>{leave.status}</button>
-              : (<span>{leave.status}</span>)  
-              }
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+  {fileteredLeave.map((leave) => (
+    <TableRow key={leave._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+      <TableCell align="left">{leave.employee.fname}</TableCell>
+      <TableCell align="left">{dayjs(leave.date).format("D MMMM YYYY")}</TableCell>
+      <TableCell align="left">{leave.description}</TableCell>
+      <TableCell align="left">
+        {role === "admin" && leave.status === "pending" ? (
+          <button className='text-blue-600 underline' onClick={() => handleVerifyLeave(leave._id)}>
+            {leave.status}
+          </button>
+        ) : (
+          <span>{leave.status}</span>
+        )}
+      </TableCell>
+    </TableRow>
+  ))}
+</TableBody>
+
       </Table>
     </TableContainer>
 
