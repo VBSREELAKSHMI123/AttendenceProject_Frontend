@@ -179,7 +179,7 @@ const ProfessionalInformation = ({ setTabValue, profformValues, setprofformValue
         <button className="px-5 py-2 border border-gray-300 rounded-md text-gray-700">
           Cancel
         </button>
-        <button className="px-5 py-2 bg-blue-600 text-white rounded-md" onClick={onSubmit}>
+        <button className="px-5 py-2 bg-blue-600 text-white rounded-md" onClick={handleNext}>
           Next
         </button>
       </div>

@@ -63,13 +63,18 @@ const AddEmp = () => {
     mode: ""
   })
 
-  const [docformValues, setdocformValues] = useState<TypeList>({
-    appointment: undefined,
-    salaryslip: undefined,
-    reliving: undefined,
-    experience: undefined
-  })
-
+  // const [docformValues, setdocformValues] = useState<TypeList>({
+  //   appointment: undefined,
+  //   salaryslip: undefined,
+  //   reliving: undefined,
+  //   experience: undefined
+  // })
+  const [files, setFiles] = useState<{
+    salaryslip?: File;
+    certificate?: File;
+    appointment?: File;
+    reliving?: File;
+  }>({});
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setTabValue(newValue);
@@ -85,11 +90,16 @@ const AddEmp = () => {
   //  }
 
   const handleSubmit = async () => {
+    const formdata = new FormData()
+    if (files.salaryslip) formdata.append("salaryslip", files.salaryslip);
+    if (files.certificate) formdata.append("certificate", files.certificate);
+    if (files.reliving) formdata.append("reliving", files.reliving);
+    if (files.appointment) formdata.append("appointment", files.appointment);
     try {
       const data = { ...personalformValues, ...profformValues }
       console.log("data", data);
 
-      const response = await privateRequest.put(`/api/employee/update-emp/${id}`, data)
+      const response = await privateRequest.put(`/api/employee/update-emp/${id}`, formdata)
       console.log("response", response);
 
       if (response.data && response.data.success) {
@@ -134,7 +144,9 @@ const AddEmp = () => {
           </Box>
           <TabPanel value={PERSONAL}><PersonalInformation setTabValue={setTabValue} personalformValues={personalformValues} setpersonalFormValues={setpersonalFormValues} /></TabPanel>
           <TabPanel value={PROFESSIONAL}><ProfessionalInformation setTabValue={setTabValue} profformValues={profformValues} setprofformValues={setprofformValues} onSubmit={handleSubmit} /></TabPanel>
-          <TabPanel value={DOCUMENTS}><Documents buttonName={completeProfile ? "Submit" : "Update"} handleSubmit={handleSubmit} /></TabPanel>
+          <TabPanel value={DOCUMENTS}><Documents buttonName={completeProfile ? "Submit" : "Update"}   files={files}
+           setFiles={setFiles} handleSubmit={handleSubmit} />
+           </TabPanel>
         </TabContext>
       </Box>
     </div>

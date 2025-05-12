@@ -1,24 +1,25 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {persistStore,persistReducer} from 'redux-persist';
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import LoginReducer from './LoginSlice/login';
 
 const configureLoginPersist = {
-    key:"login",
+    key: "login",
     storage
 }
 
-const persistLoginReducer = persistReducer(configureLoginPersist,LoginReducer)
+const persistLoginReducer = persistReducer(configureLoginPersist, LoginReducer)
 
 export const store = configureStore({
-    reducer:{
-        loginState:persistLoginReducer
+    reducer: {
+        loginState: persistLoginReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-          serializableCheck: false,
+            serializableCheck: false,
         }),
 })
 
 export const persist = persistStore(store)
 export type RootState = ReturnType<typeof store.getState>;
+export const userState = (state: RootState) => state.loginState

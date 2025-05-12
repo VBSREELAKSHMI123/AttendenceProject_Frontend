@@ -24,8 +24,9 @@ import EmpList from './pages/EmpList'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { useSelector } from 'react-redux'
 import { ComplateProfile } from './pages/ComplateProfile'
-import Profile from './pages/Profile'
+import Profile from './pages/Profile/Profile'
 import { LocalizationProvider } from '@mui/x-date-pickers'
+import ProfileItemView from './components/ProfileItemView'
 
 function App() {
   const { isAuthenticated } = useSelector((state: any) => state.loginState)

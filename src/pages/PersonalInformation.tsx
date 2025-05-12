@@ -82,17 +82,13 @@ const PersonalInformation = ({ setTabValue, setpersonalFormValues, personalformV
   }
 
   const handleNext = async () => {
-
     const errors = await handleValidations(personalformValues)
     console.log(errors);
     setformError(errors)
 
-
     if (Object.keys(errors).length === 0) {
       setTabValue(PROFESSIONAL)
     }
-
-
   }
 
   return (
