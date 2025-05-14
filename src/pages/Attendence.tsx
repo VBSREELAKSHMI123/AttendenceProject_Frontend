@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { privateRequest } from '../apis/requsetMethods'
 import { data } from 'react-router-dom'
 import dayjs from 'dayjs'
+import { useSelector } from 'react-redux'
 
 const Attendence = () => {
   const [checkIn, setcheckIn] = useState(false)
+  const {user} = useSelector((state:any)=>state.loginState)
+  const role = user.role
 
   const handleAttendence = async () => {
     try {
@@ -36,11 +39,15 @@ const Attendence = () => {
   }
 
   return (
-    <div>
-      <button
-        className=' bg-blue-700 rounded-md px-5 py-2 text-sm text-blue-50' onClick={handleAttendence}>
-        {checkIn ? "Checkout" : "Checkin"}
-      </button>
+<div>
+      {role === 'user' && (
+        <button
+          className='bg-blue-700 rounded-md px-5 py-2 text-sm text-blue-50'
+          onClick={handleAttendence}
+        >
+          {checkIn ? "Checkout" : "Checkin"}
+        </button>
+      )}
     </div>
   )
 }

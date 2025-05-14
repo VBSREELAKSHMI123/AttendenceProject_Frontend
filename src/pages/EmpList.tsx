@@ -1,21 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { privateRequest } from '../apis/requsetMethods';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import Loader from '../components/Loader';
+import { Eye } from '@phosphor-icons/react';
+import { useNavigate } from 'react-router-dom';
 
-const columns: GridColDef[] = [
-  { field: 'fname', headerName: 'Employee Name', width: 130 },
-  { field: '_id', headerName: 'Employee ID', width: 130 },
-  { field: 'department', headerName: 'Department', width: 130 },
-  { field: 'designation', headerName: 'Designation', width: 130 },
-  { field: 'mode', headerName: 'Mode', width: 90 },
-  { field: 'type', headerName: 'Type', width: 90 },
-  { field: 'action', headerName: 'Action', width: 100 },
-];
+// const columns: GridColDef[] = [
+//   { field: 'fname', headerName: 'Employee Name', width: 130 },
+//   { field: '_id', headerName: 'Employee ID', width: 130 },
+//   { field: 'department', headerName: 'Department', width: 130 },
+//   { field: 'designation', headerName: 'Designation', width: 130 },
+//   { field: 'mode', headerName: 'Mode', width: 90 },
+//   { field: 'type', headerName: 'Type', width: 90 },
+//   {
+//     field: 'action',
+//     headerName: 'Action',
+//     width: 90,
+//     sortable: false,
+//     renderCell: (params) => {
+//       const navigate = useNavigate(); 
+//       return (
+//         <Eye size={24}
+//           className="cursor-pointer text-blue-600"
+//           onClick={() => navigate(`/dash/profile/${params.row._id}`)}
+//         />
+//       );
+//     },
+//   },
+// ];
+
 
 const EmpList = () => {
+    const navigate = useNavigate();
+    const columns: GridColDef[] = [
+      { field: 'fname', headerName: 'Employee Name', width: 130 },
+      { field: '_id', headerName: 'Employee ID', width: 130 },
+      { field: 'department', headerName: 'Department', width: 130 },
+      { field: 'designation', headerName: 'Designation', width: 130 },
+      { field: 'mode', headerName: 'Mode', width: 90 },
+      { field: 'type', headerName: 'Type', width: 90 },
+      {
+        field: 'action',
+        headerName: 'Action',
+        width: 90,
+        sortable: false,
+        renderCell: (params) => (
+          <Eye
+            size={24}
+            className="cursor-pointer items-center"
+            onClick={() => navigate(`/dash/profile/${params.row._id}`)} 
+          />
+        ),
+      },
+    ];
+  
+
+
   const [employees, setEmployees] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [openModal, setOpenModal] = useState(false)
@@ -78,7 +119,7 @@ const EmpList = () => {
     fetchEmp();
   }, [paginationModel.page, paginationModel.pageSize, filterApplied]);
 
-  const navigate = useNavigate();
+
 
   return (
     <div >

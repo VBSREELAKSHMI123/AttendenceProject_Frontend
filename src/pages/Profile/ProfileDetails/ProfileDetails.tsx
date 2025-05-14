@@ -15,7 +15,7 @@ const flexClass = "flex gap-5 items-start mb-5"
 
 export const ProfileDetails = () => {
     const { id } = useParams()
-    const [tabValue, setTabValue] = useState<string>("1")
+    const [tabValue, setTabValue] = useState<string>("personalinfo")
     const [employeeDetail, setEmployeeDetail] = useState<TypeList>({})
     const { user } = useSelector(userState)
 
@@ -28,7 +28,7 @@ export const ProfileDetails = () => {
 
     }
 
-    const fetchEmployee = async (id: any) => {
+    const fetchEmployee = async () => {
         try {
             const response = await privateRequest.get(`api/employee/viewonlyemp/${user.user_id}`)
             if (response.data) {
@@ -42,7 +42,7 @@ export const ProfileDetails = () => {
     }
 
     useEffect(() => {
-        fetchEmployee(id)
+        fetchEmployee()
     }, [id]);
 
     return (
