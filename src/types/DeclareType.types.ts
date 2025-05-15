@@ -35,7 +35,5 @@ export interface TypeList {
     salaryslip?:File,
     reliving?:File,
     experience?:File
-
-
 }
 

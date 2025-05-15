@@ -42,7 +42,7 @@ const Profile = () => {
           <span><ClipboardText size={20} /></span>Leave Days</p>
           </div>
           <div className='flex-[4]'>
-            {active === 'profile' && <ProfileDetails/>}
+            {active === 'profile' && <ProfileDetails />}
             {active === 'attendence' && <AttendenceDetails/>}
             {active === 'leave' && <Leaves/>}
           </div>
